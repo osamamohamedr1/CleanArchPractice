@@ -30,7 +30,7 @@ public static class DependencyInjection
     {
         var jwtSettings = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>();
 
-        services.AddIdentityCore<AppUser>()
+        services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
 
