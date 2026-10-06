@@ -12,5 +12,7 @@ internal class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasKey(x => x.Id);
         builder.ToTable("Products");
         builder.Property(x => x.Name).IsRequired();
+        builder.Property(p => p.Price)
+            .HasPrecision(18, 2);
     }
 }

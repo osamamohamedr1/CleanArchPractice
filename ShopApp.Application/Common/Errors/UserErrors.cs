@@ -10,4 +10,5 @@ public static class UserError
     public static Error NotFound = new(Code: "UserNotFound", "The specified user was not found.",404);
     public static Error InvalidCredentials = new(Code: "InvalidCredentials", "User name or password in incorrect", 404);
     public static Error InvalidToken = new(Code: "InvalidToken", "The provided token is invalid.", 401);
+    public static Error InvalidRefreshToken = new(Code: "InvalidRefreshToken", "The provided refresh token is invalid.", 401);
 }

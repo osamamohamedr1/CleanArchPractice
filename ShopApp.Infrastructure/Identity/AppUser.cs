@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ShopApp.Domain.Entities;
+
 
 namespace ShopApp.Infrastructure.Identity;
 
 public class AppUser : IdentityUser
 {
     public string FullName { get; set; } = string.Empty;
+    public List<RefreshToken> RefreshTokens { get; set; } = [];
+
 }

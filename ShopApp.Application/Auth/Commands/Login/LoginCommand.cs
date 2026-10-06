@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopApp.Application.Auth.Commands;
+namespace ShopApp.Application.Auth.Commands.Login;
 
 public record LoginCommand(
     string Email,

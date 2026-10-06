@@ -12,4 +12,5 @@ public class JwtOptions
     public string Audience { get; init; } = default!;
     public string SecretKey { get; init; } = default!;
     public int ExpiryMinutes { get; init; } = 60;
+    public int RefreshTokenExpiryDays { get; init; } = 7;
 }

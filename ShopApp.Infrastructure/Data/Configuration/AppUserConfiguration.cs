@@ -10,6 +10,11 @@ internal class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
 
     public void Configure(EntityTypeBuilder<AppUser> builder)
     {
+        builder.HasMany(u => u.RefreshTokens)
+           .WithOne()
+           .HasForeignKey(u => u.UserId)
+           .OnDelete(DeleteBehavior.Cascade);
+
         builder.Property(u => u.FullName).HasMaxLength(100);
 
         // Dev seed user: admin@shop.com / Admin@123 (change the password outside development)

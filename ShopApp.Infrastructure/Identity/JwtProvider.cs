@@ -35,4 +35,35 @@ internal class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
 
         return (new JwtSecurityTokenHandler().WriteToken(token), options.ExpiryMinutes);
     }
+
+    public string? ValidateToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey));
+        try
+        {
+            tokenHandler.ValidateToken(token,
+                new TokenValidationParameters
+                {
+                    IssuerSigningKey = symmetricSecurityKey,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidIssuer = options.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = options.Audience,
+                    // an expired access token is expected here; only the signature matters
+                    ValidateLifetime = false,
+                    ClockSkew = TimeSpan.Zero
+                },
+                out SecurityToken validatedToken);
+            var jwtToken = (JwtSecurityToken)validatedToken;
+            return jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
+        }
+        catch
+        {
+            return null;
+        }
+
+    }
+
 }
