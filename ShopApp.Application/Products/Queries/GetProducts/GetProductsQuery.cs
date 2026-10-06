@@ -1,9 +1,12 @@
-﻿using System;
+﻿using MediatR;
+using ShopApp.Application.Common.Models;
+using ShopApp.Application.Products.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopApp.Application.Products.Queris.GetProducts;
+namespace ShopApp.Application.Products.Queries.GetProducts;
 
-internal class GetProductsQuery
+public class GetProductsQuery : IRequest<Result<List<ProductDto>>>
 {
 }
