@@ -1,27 +1,10 @@
-using FluentValidation;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ShopApp.Api.Middlewares;
 using ShopApp.Application;
-using ShopApp.Application.Behaviors;
-using ShopApp.Application.Common.Interfaces;
-using ShopApp.Infrastructure.Data;
-using ShopApp.Infrastructure.Services;
+using ShopApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-var constr= builder.Configuration.GetConnectionString("DefaultConnection")??
-    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<AppDbContext>(options=>options.UseSqlServer(connectionString:constr));
-// mediatr
-builder.Services.AddMediatR(cfg =>
-{       // application assembly marker
-    cfg.RegisterServicesFromAssembly(typeof(IAssemblyMarker).Assembly);
-});
-//fluentValidtion
-builder.Services.AddValidatorsFromAssembly(typeof(IAssemblyMarker).Assembly);
-//validtion Pipline
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -38,6 +21,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShopApp.Api.Extensions;
 using ShopApp.Application.Products.Commands.CreateProduct;
@@ -9,6 +10,7 @@ namespace ShopApp.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProductsController(ISender sender) : ControllerBase
 {
     private readonly ISender sender = sender;
